@@ -9,11 +9,13 @@ public class Wall : MonoBehaviour
     private void Start()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
+
+        _meshRenderer.material.color = GetNewColor();
     }
 
     private void Update()
     {
-        _meshRenderer.material.color = GetNewColor();
+        
     }
 
     private Color GetNewColor()

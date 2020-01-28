@@ -18,7 +18,11 @@ public class GameState : MonoBehaviour
     {
         if (_columns.Count > 1)
         {
-            _wallSpawner.SpawnBetween(_columns[0], _columns[1]);
+            _columns.Sort();
+
+            int firstNearColumnIndex = GetFirstNearColumnIndex();
+
+           _wallSpawner.SpawnBetween(_columns[firstNearColumnIndex], _columns[firstNearColumnIndex + 1]);
         }
         else
         {
@@ -41,4 +45,31 @@ public class GameState : MonoBehaviour
             _columns.Remove(column);
         }
     }
+
+    private int GetFirstNearColumnIndex()
+    {
+        if (_columns.Count > 2)
+        {
+            float minDistance = Vector3.Distance(_columns[0].transform.position, _columns[1].transform.position);
+            int firstNearColumnIndex = 0;
+
+            for (int i = 1; i < _columns.Count - 1; i++)
+            {
+                float distance = Vector3.Distance(_columns[i].transform.position, _columns[i + 1].transform.position);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    firstNearColumnIndex = i;
+                }
+            }
+
+            return firstNearColumnIndex;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 }
