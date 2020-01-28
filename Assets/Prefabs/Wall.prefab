@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6734271905218941605}
   - component: {fileID: 1069766066760094927}
   m_Layer: 0
-  m_Name: Wall2
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8493597392690659773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.545, y: 0.13623047, z: 2.5239258}
-  m_LocalScale: {x: 0.05, y: 2, z: 1}
+  m_LocalScale: {x: 0.05, y: 1.8, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4c9057057a5b4e54c9858be9070acd0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,3 +105,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a047bb199cd794fa7007b89b5a7fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _length: 0
