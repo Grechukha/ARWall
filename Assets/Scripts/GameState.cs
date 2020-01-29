@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 [RequireComponent(typeof(WallBuilder))]
 public class GameState : MonoBehaviour
@@ -49,33 +47,34 @@ public class GameState : MonoBehaviour
             _wallSpawner.Remowe();
         }
     }
-
+    
     private int[] GetNearColumnsIndices()
     {
         if (_columns.Count > 2)
         {
-            _columns.Sort();
-
             float minDistance = Vector3.Distance(_columns[0].transform.position, _columns[1].transform.position);
-            int firstNearColumnIndex = 0;
+            int[] NearColumnsIndices = { 0, 1 };
 
-            for (int i = 1; i < _columns.Count - 1; i++)
+            for (int i = 0; i < _columns.Count; i++)
             {
-                float distance = Vector3.Distance(_columns[i].transform.position, _columns[i + 1].transform.position);
-
-                if (distance < minDistance)
+                for (int j = i + 1; j < _columns.Count; j++)
                 {
-                    minDistance = distance;
-                    firstNearColumnIndex = i;
+                    float distance = Vector3.Distance(_columns[i].transform.position, _columns[j].transform.position);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        NearColumnsIndices[0] = i;
+                        NearColumnsIndices[1] = j;
+                    }
                 }
             }
 
-            return new int[]{firstNearColumnIndex, firstNearColumnIndex + 1 };
+            return NearColumnsIndices;
         }
         else
         {
-            return new int[] { 0, 1};
+            return new int[] { 0, 1 };
         }
     }
-
 }

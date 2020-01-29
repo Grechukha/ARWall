@@ -1463,6 +1463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wallPrefab: {fileID: 1069766066760094927, guid: e888ed61dd0c19742b39fe70df1f1ebb,
     type: 3}
+  _deltaPosition: 0.125
 --- !u!43 &2088072665
 Mesh:
   m_ObjectHideFlags: 0

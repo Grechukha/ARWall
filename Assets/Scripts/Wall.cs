@@ -1,33 +1,48 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
 public class Wall : MonoBehaviour
 {
+    [SerializeField] private int _life = 10;
+
     private MeshRenderer _meshRenderer;
+    private int _currentLife;
     private float _colorMaxIntensityLength = 3;
 
-    public Column FirstColumn { get; private set; }
-    public Column SecondColumn { get; private set; }
+    public event Action<Vector3[]> Died;
+
+    public int FirstColumnHashCode { get; private set; }
+    public int SecondColumnHashCode { get; private set; }
     public Vector3 BuildedFirstColumnPosition { get; private set; }
     public Vector3 BuildedSecondColumnPosition { get; private set; }
 
     private void Start()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
+        _meshRenderer = gameObject.GetComponent<MeshRenderer>();
+    }
+
+    private void OnMouseDown()
+    {
+        _currentLife--;
+
+        if(_currentLife <= 0)
+        {
+            Died?.Invoke(new Vector3[] {BuildedFirstColumnPosition, BuildedSecondColumnPosition});
+        }
     }
 
     public void SetColumns(Column firstColumn, Column secondColumn)
     {
-        FirstColumn = firstColumn;
-        SecondColumn = secondColumn;
+        FirstColumnHashCode = firstColumn.GetHashCode();
+        SecondColumnHashCode = secondColumn.GetHashCode();
 
-        SetParameters(FirstColumn, SecondColumn);
+        BuildedFirstColumnPosition = firstColumn.transform.position;
+        BuildedSecondColumnPosition = secondColumn.transform.position;
 
-        BuildedFirstColumnPosition = FirstColumn.transform.position;
-        BuildedSecondColumnPosition = SecondColumn.transform.position;
+        SetParameters(firstColumn, secondColumn);
 
         _meshRenderer.material.color = GetNewColor();
+        _currentLife = _life;
     }
 
     private void SetParameters(Column firstColumn, Column secondColumn)
@@ -46,6 +61,4 @@ public class Wall : MonoBehaviour
 
         return new Color(1, colorIntensity, colorIntensity);
     }
-
-    
 }
