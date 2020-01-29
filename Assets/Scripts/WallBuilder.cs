@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class WallSpawner : MonoBehaviour
+public class WallBuilder : MonoBehaviour
 {
-    [SerializeField] Wall _wallPrefab;
+    [SerializeField] private Wall _wallPrefab;
     private Wall _wall;
 
-    public Wall SpawnBetween(Column column1, Column column2)
+    public Wall BuildBetween(Column column1, Column column2)
     {
         Vector3 position = column1.transform.position + (column2.transform.position - column1.transform.position) / 2;
         float length = Vector3.Distance(column1.transform.position, column2.transform.position);
