@@ -40,8 +40,6 @@ public class GameState : MonoBehaviour
     {
         if (_columns.Count > 1)
         {
-            _columns.Sort();
-
             _selectedColumnsIndices = GetNearColumnsIndices();
 
             _wallSpawner.BuildBetween(_columns[_selectedColumnsIndices[0]], _columns[_selectedColumnsIndices[1]]);
@@ -54,10 +52,10 @@ public class GameState : MonoBehaviour
 
     private int[] GetNearColumnsIndices()
     {
-
-
         if (_columns.Count > 2)
         {
+            _columns.Sort();
+
             float minDistance = Vector3.Distance(_columns[0].transform.position, _columns[1].transform.position);
             int firstNearColumnIndex = 0;
 
