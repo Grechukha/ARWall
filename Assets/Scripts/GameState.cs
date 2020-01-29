@@ -3,31 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-[RequireComponent(typeof(WallSpawner))]
+[RequireComponent(typeof(WallBuilder))]
 public class GameState : MonoBehaviour
 {
-    private WallSpawner _wallSpawner;
+    private WallBuilder _wallSpawner;
     private List<Column> _columns = new List<Column>();
+    private int[] _selectedColumnsIndices = null;
 
     private void Start()
     {
-        _wallSpawner = gameObject.GetComponent<WallSpawner>();
+        _wallSpawner = gameObject.GetComponent<WallBuilder>();
     }
 
     private void Update()
     {
-        if (_columns.Count > 1)
-        {
-            _columns.Sort();
-
-            int firstNearColumnIndex = GetFirstNearColumnIndex();
-
-           _wallSpawner.SpawnBetween(_columns[firstNearColumnIndex], _columns[firstNearColumnIndex + 1]);
-        }
-        else
-        {
-            _wallSpawner.Remowe();
-        }
+        BuildWall();
     }
 
     public void AddColumn(Column column)
@@ -46,8 +36,26 @@ public class GameState : MonoBehaviour
         }
     }
 
-    private int GetFirstNearColumnIndex()
+    private void BuildWall()
     {
+        if (_columns.Count > 1)
+        {
+            _columns.Sort();
+
+            _selectedColumnsIndices = GetNearColumnsIndices();
+
+            _wallSpawner.BuildBetween(_columns[_selectedColumnsIndices[0]], _columns[_selectedColumnsIndices[1]]);
+        }
+        else
+        {
+            _wallSpawner.Remowe();
+        }
+    }
+
+    private int[] GetNearColumnsIndices()
+    {
+
+
         if (_columns.Count > 2)
         {
             float minDistance = Vector3.Distance(_columns[0].transform.position, _columns[1].transform.position);
@@ -64,11 +72,11 @@ public class GameState : MonoBehaviour
                 }
             }
 
-            return firstNearColumnIndex;
+            return new int[]{firstNearColumnIndex, firstNearColumnIndex + 1 };
         }
         else
         {
-            return 0;
+            return new int[] { 0, 1};
         }
     }
 
